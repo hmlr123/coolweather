@@ -1,16 +1,12 @@
 package com.hmlr123.coolweather.db;
 
-import org.litepal.exceptions.DataSupportException;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * 县
  */
-public class County extends DataSupportException {
+public class County extends LitePalSupport {
 
-
-    public County(String errorMessage) {
-        super(errorMessage);
-    }
 
     private int id;
     private String countyName;

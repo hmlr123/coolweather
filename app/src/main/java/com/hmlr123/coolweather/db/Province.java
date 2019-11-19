@@ -1,18 +1,20 @@
 package com.hmlr123.coolweather.db;
 
+import org.litepal.crud.LitePalSupport;
 import org.litepal.exceptions.DataSupportException;
 
 /**
  * 省份实体
  */
-public class Province extends DataSupportException {
-    public Province(String errorMessage) {
-        super(errorMessage);
-    }
+public class Province extends LitePalSupport {
 
     private int id;
     private String provinceName;
     private int provinceCode;
+
+    public Province() {
+        super();
+    }
 
     public int getId() {
         return id;

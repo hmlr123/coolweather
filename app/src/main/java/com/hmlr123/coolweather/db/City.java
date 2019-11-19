@@ -1,14 +1,12 @@
 package com.hmlr123.coolweather.db;
 
-import org.litepal.exceptions.DataSupportException;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * 城市实体
  */
-public class City extends DataSupportException {
-    public City(String errorMessage) {
-        super(errorMessage);
-    }
+public class City extends LitePalSupport {
+
 
     private int id;
     private String cityName;
