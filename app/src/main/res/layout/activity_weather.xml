@@ -4,29 +4,72 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <ScrollView
-        android:id="@+id/weather_layout"
+    <!--背景图片-->
+    <ImageView
+        android:id="@+id/bing_pic_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:scaleType="centerCrop" />
 
-        <LinearLayout
+
+    <!--滑动菜单-->
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--下拉刷新-->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+            <!--滚动条-->
+            <ScrollView
+                android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
-            <include layout="@layout/title" />
 
-            <include layout="@layout/now" />
+                <!--android:fitsSystemWindows="true"
+                针对透明的状态栏会自动添加一个值等于状态栏高度的paddingTop；
+                针对透明的系统导航栏会自动添加一个值等于导航栏高度的paddingBottom
+                https://www.cnblogs.com/xgjblog/p/9517645.html -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
 
-            <include layout="@layout/forecast" />
+                    <!--标题-->
+                    <include layout="@layout/title" />
 
-            <include layout="@layout/aqi" />
+                    <!--现在天气-->
+                    <include layout="@layout/now" />
 
-            <include layout="@layout/suggestion" />
-        </LinearLayout>
+                    <!--预报天气-->
+                    <include layout="@layout/forecast" />
 
-    </ScrollView>
+                    <!--aqi-->
+                    <include layout="@layout/aqi" />
+
+                    <!--建议-->
+                    <include layout="@layout/suggestion" />
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!--滑动菜单显示内容-->
+        <fragment
+            android:id="@+id/choose_area_fragment"
+            android:name="com.hmlr123.coolweather.ChooseAreaFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
 
 </FrameLayout>
