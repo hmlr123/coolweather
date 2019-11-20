@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,15 +89,11 @@ public class WeatherActivity extends AppCompatActivity {
         /**
          * 退出活动，再显示会出现白色
          */
-        if (Build.VERSION.SDK_INT >= 21) {
-            // 获取顶级视图 包含整个屏幕，包括标题栏
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            // 将状态栏设置成透明色
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+        // 隐藏标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_weather);
 
         // 初始化组件
