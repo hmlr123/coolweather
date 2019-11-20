@@ -99,6 +99,7 @@ public class ChooseAreaFragment extends Fragment {
 
     /**
      * 数据事件
+     * 确保与碎片关联的活动一定已经创建完成的时候调用
      *
      * @param savedInstanceState
      */
@@ -149,6 +150,9 @@ public class ChooseAreaFragment extends Fragment {
         queryProvinces();
     }
 
+    /**
+     * 获取省份数据
+     */
     private void queryProvinces() {
         titleText.setText("中国");
         // 隐藏
@@ -168,6 +172,9 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
 
+    /**
+     * 获取市级数据
+     */
     private void queryCities() {
         titleText.setText(selectedProvince.getProvinceName());
         backButton.setVisibility(View.VISIBLE);
@@ -187,6 +194,9 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
 
+    /**
+     * 获取省份数据
+     */
     private void queryCounties() {
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
@@ -258,12 +268,18 @@ public class ChooseAreaFragment extends Fragment {
         });
     }
 
+    /**
+     * 关闭下拉刷新进度
+     */
     private void closeProgressDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
+    /**
+     * 显示下拉刷新进度
+     */
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());

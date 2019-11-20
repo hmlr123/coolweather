@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         DebugDB.getAddressLog();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getString("weather", null) != null) {
+        if (null != prefs.getString("weather", null)) {
             Intent intent = new Intent(this, WeatherActivity.class);
             startActivity(intent);
             finish();
