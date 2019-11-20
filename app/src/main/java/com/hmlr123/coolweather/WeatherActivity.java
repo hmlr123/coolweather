@@ -73,6 +73,8 @@ public class WeatherActivity extends AppCompatActivity {
 
     private Button navButton;
 
+    private String weatherId;
+
     /**
      * 从后台切换值前台的时候加载 网络资源从缓存获取
      *
@@ -118,7 +120,6 @@ public class WeatherActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
-        final String weatherId;
         if (null != weatherString) {
             Weather weather = Utility.handleWeatherResponse(weatherString);
             weatherId = weather.basic.weatherId;
@@ -191,11 +192,11 @@ public class WeatherActivity extends AppCompatActivity {
     /**
      * 请求天气数据
      *
-     * @param weatherId
+     * @param rWeatherId
      */
-    public void requestWeather(String weatherId) {
+    public void requestWeather(final String rWeatherId) {
 
-        HttpUtil.sendOkHttpRequest(WEATHER_URL + "?cityid=" + weatherId + "&key=" + KEY, new Callback() {
+        HttpUtil.sendOkHttpRequest(WEATHER_URL + "?cityid=" + rWeatherId + "&key=" + KEY, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 e.printStackTrace();
@@ -211,15 +212,22 @@ public class WeatherActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                // 发送请求获取数据
                 String responseText = response.body().string();
+                // 解析数据
                 Weather weather = Utility.handleWeatherResponse(responseText);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (null != weather && "ok".equals(weather.status)) {
+                            // 保存到缓存中
                             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
                             editor.putString("weather", responseText);
                             editor.apply();
+
+                            // 更新内存中的天气id 方便下次下拉刷新的时候加载这次的选择的数据
+                            weatherId = weather.basic.weatherId;
+                            // 显示天气信息
                             showWeatherInfo(weather);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
